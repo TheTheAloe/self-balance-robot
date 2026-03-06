@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-const int MPU_ADDR = 0x68;   // MPU6050 I2C address (usually 0x68)
+const int MPU_ADDR = 0x68;   // MPU6050 I2C address
 
 int16_t accX, accY, accZ;
 int16_t gyroX, gyroY, gyroZ;
@@ -28,7 +28,7 @@ void readMPU() {
   accY = (Wire.read() << 8) | Wire.read();
   accZ = (Wire.read() << 8) | Wire.read();
 
-  Wire.read(); Wire.read(); // skip temp
+  Wire.read(); Wire.read(); // 
 
   gyroX = (Wire.read() << 8) | Wire.read();
   gyroY = (Wire.read() << 8) | Wire.read();
@@ -51,7 +51,7 @@ void setup() {
   delay(200);
   lastMicros = micros();
 
-  Serial.println("roll pitch yaw"); // header helps Serial Plotter label lines sometimes
+  Serial.println("roll pitch yaw"); // header helps label lines 
 }
 
 void loop() {
@@ -61,26 +61,26 @@ void loop() {
   float dt = (now - lastMicros) / 1000000.0f;
   lastMicros = now;
 
-  // Convert raw accel to g's (for +/-2g, scale = 16384 LSB/g)
+  // raw accel to g's 
   float ax = accX / 16384.0f;
   float ay = accY / 16384.0f;
   float az = accZ / 16384.0f;
 
-  // Convert raw gyro to deg/s (for +/-250 deg/s, scale = 131 LSB/(deg/s))
+  //raw gyro to deg/s 
   float gx = gyroX / 131.0f;
   float gy = gyroY / 131.0f;
   float gz = gyroZ / 131.0f;
 
-  // Roll & Pitch from accelerometer (degrees)
+  // roll and pitrjc
   float accelRoll  = atan2(ay, az) * 180.0f / PI;
   float accelPitch = atan2(-ax, sqrt(ay * ay + az * az)) * 180.0f / PI;
 
-  // Integrate gyro for angles (degrees)
+  //  gyro for angles (degrees)
   float gyroRoll  = roll  + gx * dt;
   float gyroPitch = pitch + gy * dt;
   yaw += gz * dt; // yaw will drift without magnetometer (normal)
 
-  // Complementary filter (tweak alpha if you want)
+  // folterrr
   const float alpha = 0.98f;
   roll  = alpha * gyroRoll  + (1.0f - alpha) * accelRoll;
   pitch = alpha * gyroPitch + (1.0f - alpha) * accelPitch;
