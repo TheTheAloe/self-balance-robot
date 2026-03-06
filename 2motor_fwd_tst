@@ -21,7 +21,7 @@ void setup() {
 
 void loop() {
 
-  // BOTH MOTORS FORWARD
+  // both fwd
   digitalWrite(IN4, HIGH);
   digitalWrite(IN3, LOW);
   digitalWrite(IN2, HIGH);
@@ -38,7 +38,7 @@ void loop() {
 
   delay(2000);
 
-  // BOTH MOTORS REVERSE
+  // bpoth reverse
   digitalWrite(IN4, LOW);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN2, LOW);
@@ -49,7 +49,7 @@ void loop() {
 
   delay(4000);
 
-  // STOP AGAIN
+  // stop
   analogWrite(ENB, 0);
   analogWrite(ENA, 0);
 
